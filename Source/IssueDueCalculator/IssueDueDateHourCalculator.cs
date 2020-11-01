@@ -43,8 +43,6 @@ namespace IssueDueCalculator
                 throw new ArgumentException($"{nameof(turnAroundTime)} cannot be zero");
             }
 
-            uint daysRequired = turnAroundTime / DailyHours;
-            uint hoursRequired = turnAroundTime % DailyHours;
             DateTime result = submitDate;
             while (turnAroundTime > 0)
             {
