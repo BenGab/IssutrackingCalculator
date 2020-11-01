@@ -11,9 +11,9 @@ namespace IssueDueCalculator
 
         public IssueDueDateHourCalculator(uint startWorkingHour, uint endWorkingHour)
         {
-            if(startWorkingHour >= endWorkingHour)
+            if (startWorkingHour >= endWorkingHour)
             {
-                throw new ArgumentException($"{nameof(startWorkingHour)} is bigger or equal than {nameof(endWorkingHour)}"); 
+                throw new ArgumentException($"{nameof(startWorkingHour)} is bigger or equal than {nameof(endWorkingHour)}");
             }
 
             _startWorkingHour = startWorkingHour;
@@ -23,15 +23,22 @@ namespace IssueDueCalculator
         public DateTime CalculateDueDate(DateTime submitDate, uint turnAroundTime)
         {
             uint daysRequired = turnAroundTime / DailyHours;
+            uint hoursRequired = turnAroundTime % DailyHours;
             DateTime result = submitDate;
-            while(daysRequired > 0)
+            while (turnAroundTime > 0)
             {
-                result = result.AddDays(1);
+                result = result.AddHours(1);
                 if (result.DayOfWeek == DayOfWeek.Saturday || result.DayOfWeek == DayOfWeek.Sunday)
                 {
                     continue;
                 }
-                --daysRequired;
+
+                if(result.TimeOfDay.Hours <= _startWorkingHour || result.TimeOfDay.Hours > _endWorkingHour)
+                {
+                    continue;
+                }
+
+                --turnAroundTime;
             }
 
             return result;

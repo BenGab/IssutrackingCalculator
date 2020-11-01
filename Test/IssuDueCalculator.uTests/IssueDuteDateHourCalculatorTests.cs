@@ -27,9 +27,9 @@ namespace IssuDueCalculator.uTests
             Assert.Throws<ArgumentException>(() => new IssueDueDateHourCalculator(startWorkingHour, endWokingHour));
         }
 
-        [TestCase("2020-11-03", "2020-11-05", (uint)16)]
         [TestCase("2020-11-02 14:12:00", "2020-11-04 14:12:00", (uint)16)]
         [TestCase("2020-11-06 14:12:00", "2020-11-10 14:12:00", (uint)16)]
+        [TestCase("2020-11-06 14:12:00", "2020-11-06 16:12:00", (uint)2)]
         public void CalculateDueDate_Should_Return_ExpexctedDueDate(DateTime fromDate, DateTime expectedDate, uint turnaroundTime)
         {
             const uint startWorkingHour = 9;
