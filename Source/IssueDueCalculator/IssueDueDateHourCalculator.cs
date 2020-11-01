@@ -22,6 +22,11 @@ namespace IssueDueCalculator
 
         public DateTime CalculateDueDate(DateTime submitDate, uint turnAroundTime)
         {
+            if(turnAroundTime == 0)
+            {
+                throw new ArgumentException($"{nameof(turnAroundTime)} cannot be zero");
+            }
+
             uint daysRequired = turnAroundTime / DailyHours;
             uint hoursRequired = turnAroundTime % DailyHours;
             DateTime result = submitDate;

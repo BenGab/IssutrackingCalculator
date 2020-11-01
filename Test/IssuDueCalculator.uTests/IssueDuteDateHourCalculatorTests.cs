@@ -40,5 +40,15 @@ namespace IssuDueCalculator.uTests
 
             Assert.That(result, Is.EqualTo(expectedDate));
         }
+
+        [Test]
+        public void CalculateDate_Should_Return_ArgumentNullException_When_Timearound_Zero()
+        {
+            const uint startWorkingHour = 9;
+            const uint endWorkingHour = 17;
+
+            var sut = new IssueDueDateHourCalculator(startWorkingHour, endWorkingHour);
+            Assert.Throws<ArgumentException>(() => sut.CalculateDueDate(DateTime.UtcNow, 0));
+        }
     }
 }
